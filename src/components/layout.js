@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar } from "react-bootstrap";
 
 import { LinkContainer } from "react-router-bootstrap";
-import { MDBContainer, MDBFooter } from "mdbreact";
+import Footer from "./Footer";
 
 const layout = (props) => {
   return (
@@ -15,14 +15,7 @@ const layout = (props) => {
 
       {props.children}
 
-      <MDBFooter color="blue" className="font-small pt-4 mt-4 fixed-bottom">
-        <div className="footer-copyright text-center py-3">
-          <MDBContainer fluid>
-            &copy; {new Date().getFullYear()} Copyright:{" "}
-            <a href="shivambhardwaj0129@gmail.com"> Shivam Bhardwaj </a>
-          </MDBContainer>
-        </div>
-      </MDBFooter>
+      <Footer />
     </React.Fragment>
   );
 };

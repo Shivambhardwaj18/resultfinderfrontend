@@ -25,42 +25,41 @@ const Home = () => {
 
   let inside_error = false;
 
-  const [finalResults, setFinalResults] = useState(null);
+  const [finalResults, setFinalResults] = useState([]);
 
-  const [r_nums, setR_nums] = useState(null);
+  const [r_nums, setR_nums] = useState([]);
 
   const [getResult, { error, loading }] = useMutation(GET_RESULT);
 
+  const finalResultSetter = (to_save_data) => {
+    setFinalResults(to_save_data);
+  };
+
   const fetchHandler = async (e) => {
     inside_error = false;
-    setFinalResults(null);
+    setFinalResults([]);
+    setR_nums([]);
     e.preventDefault();
 
     let form_data = e.target.r_nums.value;
 
-    let send_str = "";
-
-    let arr = form_data.split(" ");
+    let arr = form_data.split(",");
+    let to_save_data = [];
+    let x = new Array();
 
     for (let i = 0; i < arr.length; i++) {
-      if (arr[i] !== "" && arr[i] !== " " && arr[i].charCodeAt(0) > 47) {
-        send_str = send_str + arr[i] + " ";
-      }
+      const { data } = await getResult({
+        variables: {
+          roll_numbers: arr[i],
+        },
+      });
+
+      to_save_data.push({ result: data.getResult[0].result });
+
+      finalResultSetter(to_save_data);
     }
-    if (!send_str.length) {
-      inside_error = true;
-      return;
-    }
 
-    setR_nums(send_str.split(" "));
-
-    const { data } = await getResult({
-      variables: {
-        roll_numbers: send_str,
-      },
-    });
-
-    setFinalResults(data.getResult);
+    setR_nums(arr);
   };
 
   let mainChunk = null;
@@ -69,8 +68,10 @@ const Home = () => {
     mainChunk = <h3>Please give a valid Input</h3>;
   }
 
+  let loading_goingon = null;
+
   if (loading) {
-    mainChunk = (
+    loading_goingon = (
       <React.Fragment>
         <Spinner animation="grow" size="sm" />
         <Spinner animation="grow" />
@@ -78,12 +79,13 @@ const Home = () => {
     );
   }
 
-  if (finalResults) {
+  if (finalResults.length > 0) {
     let newArr = [];
 
-    for (let i = 0; i < r_nums.length - 1; i++) {
+    for (let i = 0; i < r_nums.length; i++) {
       newArr.push([r_nums[i], finalResults[i].result]);
     }
+
     let i = 0;
 
     mainChunk = newArr.map((x) => {
@@ -125,6 +127,7 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>{mainChunk}</tbody>
+          <tbody>{loading_goingon}</tbody>
         </Table>
       </Row>
     </Container>
