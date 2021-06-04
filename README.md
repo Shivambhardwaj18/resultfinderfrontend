@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Backend of this Application
+
+[Backend] (https://github.com/Shivambhardwaj18/Result-FinderBackend)
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -68,3 +72,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Screenshots of Tests
+
+<img src="./assets/Test1.png" align="left" alt="git" height='300px'/>
+<img src="./assets/Test2.png" align="left" alt="git" height='300px'/>
